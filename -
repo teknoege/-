@@ -5,7 +5,7 @@ local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
-local CloseBind = Enum.KeyCode.RightControl
+local CloseBind = Enum.KeyCode.LeftControl
 
 local FluxLib = Instance.new("ScreenGui")
 FluxLib.Name = "FluxLib"
@@ -88,7 +88,7 @@ end
 
 
 function Flux:Window(text, bottom,mainclr,toclose)
-	CloseBind = toclose or Enum.KeyCode.RightControl
+	CloseBind = toclose or Enum.KeyCode.LeftControl
 	PresetColor = mainclr or Color3.fromRGB(66, 134, 255)
 	local fs = false
 	local MainFrame = Instance.new("Frame")
@@ -2747,23 +2747,3 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	return Tabs
 end
 return Flux
-
-    function Window:Toggle(Value)
-        Window.Toggled = Value or not Window.Toggled
-
-        local AbsolutePosition = Main.AbsolutePosition
-        local AbsoulteSize = Main.AbsoluteSize
-        if Window.Toggled == true then
-            Main.Visible = true
-            Utility.Tween(Main, TweenInfo.new(0.25), {Size = WindowInfo.SizeSave}):Yield()
-            Main.UISizeConstraint.MinSize = Vector2.new(300, 200)
-            Main.Position = UDim2.new(0, AbsolutePosition.X, 0, AbsolutePosition.Y)
-        else
-            WindowInfo.SizeSave = Main.Size
-            Main.Position = UDim2.new(0, AbsolutePosition.X + (AbsoulteSize.X * 0.5), 0, AbsolutePosition.Y + (AbsoulteSize.Y * 0.5))
-            Main.AnchorPoint = Vector2.new(0.5, 0.5)
-            Main.UISizeConstraint.MinSize = Vector2.new(0, 0)
-            Utility.Tween(Main, TweenInfo.new(0.5), {Size = UDim2.new(0, 0, 0, 0)}):Yield()
-            Main.Visible = false
-        end
-    end
