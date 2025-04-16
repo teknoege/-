@@ -95,7 +95,7 @@ end
 function Library:change_theme(toTheme)
 	Library.CurrentTheme = toTheme
 	local c = self:lighten(toTheme.Tertiary, 20)
-	Library.DisplayName.Text = "Welcome, <font color='rgb(" ..  math.floor(c.R*255) .. "," .. math.floor(c.G*255) .. "," .. math.floor(c.B*255) .. ")'> <b>" .. LocalPlayer.DisplayName .. "</b> </font>"
+	Library.DisplayName.Text = "Hoş Geldin, <font color='rgb(" ..  math.floor(c.R*255) .. "," .. math.floor(c.G*255) .. "," .. math.floor(c.B*255) .. ")'> <b>" .. LocalPlayer.DisplayName .. "</b> </font>"
 	for color, objects in next, Library.ThemeObjects do
 		local themeColor = Library.CurrentTheme[color]
 		for _, obj in next, objects do
@@ -409,10 +409,10 @@ function Library:create(options)
 	end
 
 	options = self:set_defaults({
-		Name = "Mercury",
+		Name = "Teknoege Hub",
 		Size = UDim2.fromOffset(600, 400),
 		Theme = self.Themes[settings.Theme],
-		Link = "https://github.com/deeeity/mercury-lib"
+		Link = "https://github.com/teknoege/Teknoege-Hub"
 	}, options)
 
 	if getgenv and getgenv().MercuryUI then
@@ -852,7 +852,7 @@ function Library:create(options)
 	}, Library)
 
 	local settingsTab = Library.tab(mt, {
-		Name = "Settings",
+		Name = "Ayarlar",
 		Internal = settingsTabIcon,
 		Icon = "rbxassetid://8559790237"
 	})
@@ -860,8 +860,8 @@ function Library:create(options)
 	settingsTab:_theme_selector()
 
 	settingsTab:keybind{
-		Name = "Toggle Key",
-		Description = "Key to show/hide the UI.",
+		Name = "Menü Tuşu",
+		Description = "Menüyü Gösterme/Gizleme Tuşu.",
 		Keybind = Enum.KeyCode.End,
 		Callback = function()
 			self.Toggled = not self.Toggled
@@ -869,18 +869,9 @@ function Library:create(options)
 		end,
 	}
 
-	settingsTab:toggle{
-		Name = "Lock Dragging",
-		Description = "Makes sure you can't drag the UI outside of the window.",
-		StartingState = true,
-		Callback = function(state)
-			Library.LockDragging = state
-		end,
-	}
-
 	settingsTab:slider{
-		Name = "UI Drag Speed",
-		Description = "How smooth the dragging looks.",
+		Name = "Menü Sürükleme Hızı",
+		Description = "Menü Sürükleme Hızını Değiştirir.	",
 		Max = 20,
 		Default = 14,
 		Callback = function(value)
@@ -889,16 +880,14 @@ function Library:create(options)
 	}
 
 	local creditsTab = Library.tab(mt, {
-		Name = "Credits",
+		Name = "Kurucular",
 		Internal = creditsTabIcon,
 		Icon = "http://www.roblox.com/asset/?id=8577523456"
 	})
 
 	rawset(mt, "creditsContainer", creditsTab.container)
 
-	creditsTab:credit{Name = "Abstract", Description = "UI Library Developer", Discord = "Abstract#8007", V3rmillion = "AbstractPoo"}
-	creditsTab:credit{Name = "Deity", Description = "UI Library Developer", Discord = "Deity#0228", V3rmillion = "0xDEITY"}
-	creditsTab:credit{Name = "Repository", Description = "UI Library Repository", Github="https://github.com/deeeity/mercury-lib/blob/master/src.lua"}
+	creditsTab:credit{Name = "teknoege", Description = "Script Kurucusu", Discord = "teknoege"}
 
 	return mt
 end
