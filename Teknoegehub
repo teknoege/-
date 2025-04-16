@@ -1,1 +1,30 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
+local gui = Library:create{
+    Theme = Library.Themes.Dark
+}
 
+-- Tabs
+local t1 = gui:tab{
+    Icon = "rbxassetid://6022668888",
+    Name = "Universal"
+}
+
+local t2 = gui:tab{
+    Icon = "rbxassetid://6022668888",
+    Name = "Mvsd"
+}
+
+-- Buttons
+t1:Button{
+	Name = "İnfinite Yield",
+	Description = "Admin Script",
+	Callback = function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))() end
+}
+
+t2:Button{
+	Name = "Tbao Hub",
+	Description = "Hitbox, Esp",
+	Callback = function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubMurdervssheriff'))() end
+}
