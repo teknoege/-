@@ -1216,7 +1216,7 @@ function Library:tab(options)
 			self.homePage.Visible = true
 			self.homeButton:tween{BackgroundTransparency = 0.15}
 			selectedTab = self.homeButton
-			Library.UrlLabel.Text = Library.Url .. "/home"	
+			Library.UrlLabel.Text = Library.Url .. ""	
 		elseif tabButton == lastTab[2] then
 			lastTab = visible[#visible-1]
 			tab.Visible = false
