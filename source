@@ -3360,10 +3360,18 @@ function Library:slider(options)
 	return methods
 end
 
-function Library:textbox(options)
+function Library:walkspeed(options)
 	options = self:set_defaults({
-		Name = "Text Box",
-		Placeholder = "Type something..",
+		Name = "WalkSpeed",
+		Placeholder = "...",
+		Description = nil,
+		Callback = function(t) end
+	}, options)
+
+function Library:jumppower(options)
+	options = self:set_defaults({
+		Name = "JumpPower",
+		Placeholder = "...",
 		Description = nil,
 		Callback = function(t) end
 	}, options)
