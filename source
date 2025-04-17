@@ -3360,7 +3360,7 @@ function Library:slider(options)
 	return methods
 end
 
-function Library:walkspeed(options)
+function Library:textbox(options)
 	options = self:set_defaults({
 		Name = "WalkSpeed",
 		Placeholder = "...",
@@ -3368,20 +3368,12 @@ function Library:walkspeed(options)
 		Callback = function(t) end
 	}, options)
 
-function Library:jumppower(options)
-	options = self:set_defaults({
-		Name = "JumpPower",
-		Placeholder = "...",
-		Description = nil,
-		Callback = function(t) end
-	}, options)
-
-	local walkspeedContainer = self.container:object("TextButton", {
+	local textboxContainer = self.container:object("TextButton", {
 		Theme = {BackgroundColor3 = "Secondary"},
 		Size = UDim2.new(1, -20, 0, 52)
 	}):round(7)
 
-	local text = walkspeedContainer:object("TextLabel", {
+	local text = textboxContainer:object("TextLabel", {
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(10, (options.Description and 5) or 0),
 		Size = (options.Description and UDim2.new(0.5, -10, 0, 22)) or UDim2.new(0.5, -10, 1, 0),
@@ -3392,7 +3384,7 @@ function Library:jumppower(options)
 	})
 
 	if options.Description then
-		local description = walkspeedContainer:object("TextLabel", {
+		local description = textboxContainer:object("TextLabel", {
 			BackgroundTransparency = 1,
 			Position = UDim2.fromOffset(10, 27),
 			Size = UDim2.new(0.5, -10, 0, 20),
@@ -3404,7 +3396,7 @@ function Library:jumppower(options)
 	end
 
 
-	local walkspeed = walkspeedContainer:object("walkspeed", {
+	local textBox = textboxContainer:object("TextBox", {
 		AnchorPoint = Vector2.new(1, 0),
 		Theme = {
 			BackgroundColor3 = {"Secondary", -20},
@@ -3417,7 +3409,7 @@ function Library:jumppower(options)
 		ClipsDescendants = true
 	}):round(5):stroke("Tertiary")
 
-	local writeIcon = walkspeedContainer:object("ImageLabel", {
+	local writeIcon = textboxContainer:object("ImageLabel", {
 		Image = "http://www.roblox.com/asset/?id=8569329416",
 		AnchorPoint = Vector2.new(1, 0.5),
 		BackgroundTransparency = 1,
@@ -3428,29 +3420,29 @@ function Library:jumppower(options)
 
 
 
-	walkspeed.Size = UDim2.fromOffset(walkspeed.TextBounds.X + 20, 20)
+	textBox.Size = UDim2.fromOffset(textBox.TextBounds.X + 20, 20)
 
 	do
 		local hovered = false
 		local down = false
 		local focused = false
 
-		walkspeedContainer.MouseEnter:connect(function()
-			walkspeedContainer:tween{BackgroundColor3 = self:lighten(Library.CurrentTheme.Secondary, 10)}
+		textboxContainer.MouseEnter:connect(function()
+			textboxContainer:tween{BackgroundColor3 = self:lighten(Library.CurrentTheme.Secondary, 10)}
 		end)
 
-		walkspeedContainer.MouseLeave:connect(function()
+		textboxContainer.MouseLeave:connect(function()
 			hovered = false
 			if not down then
-				walkspeedContainer:tween{BackgroundColor3 = Library.CurrentTheme.Secondary}
+				textboxContainer:tween{BackgroundColor3 = Library.CurrentTheme.Secondary}
 			end
 		end)
 
-		walkspeed.Focused:connect(function()
+		textBox.Focused:connect(function()
 			focused = true
 			while focused and RunService.RenderStepped:wait() do
-				walkspeed.AbsoluteObject:TweenSize(
-					UDim2.fromOffset(math.clamp(walkspeed.TextBounds.X + 20, 0, 0.5 * walkspeedContainer.AbsoluteSize.X), 20),
+				textBox.AbsoluteObject:TweenSize(
+					UDim2.fromOffset(math.clamp(textBox.TextBounds.X + 20, 0, 0.5 * textboxContainer.AbsoluteSize.X), 20),
 					Enum.EasingDirection.InOut,
 					Enum.EasingStyle.Linear,
 					0.1,
@@ -3459,16 +3451,16 @@ function Library:jumppower(options)
 			end
 		end)
 
-		walkspeed.FocusLost:connect(function()
+		textBox.FocusLost:connect(function()
 			focused = false
-			walkspeed.AbsoluteObject:TweenSize(
-				UDim2.fromOffset(math.clamp(walkspeed.TextBounds.X + 20, 0, 0.5 * walkspeedContainer.AbsoluteSize.X), 20),
+			textBox.AbsoluteObject:TweenSize(
+				UDim2.fromOffset(math.clamp(textBox.TextBounds.X + 20, 0, 0.5 * textboxContainer.AbsoluteSize.X), 20),
 				Enum.EasingDirection.InOut,
 				Enum.EasingStyle.Linear,
 				0.1,
 				true
 			)
-			options.Callback(walkspeed.Text)
+			options.Callback(textBox.Text)
 		end)
 	end
 	self:_resize_tab()
@@ -3476,113 +3468,7 @@ function Library:jumppower(options)
 	local methods = {}
 
 	function methods:Set(text)
-		walkspeed.Text = text
-	end
-
-	return methods
-end
-
-	local jumppowerContainer = self.container:object("TextButton", {
-		Theme = {BackgroundColor3 = "Secondary"},
-		Size = UDim2.new(1, -20, 0, 52)
-	}):round(7)
-
-	local text = jumppowerContainer:object("TextLabel", {
-		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(10, (options.Description and 5) or 0),
-		Size = (options.Description and UDim2.new(0.5, -10, 0, 22)) or UDim2.new(0.5, -10, 1, 0),
-		Text = options.Name,
-		TextSize = 22,
-		Theme = {TextColor3 = "StrongText"},
-		TextXAlignment = Enum.TextXAlignment.Left
-	})
-
-	if options.Description then
-		local description = jumppowerContainer:object("TextLabel", {
-			BackgroundTransparency = 1,
-			Position = UDim2.fromOffset(10, 27),
-			Size = UDim2.new(0.5, -10, 0, 20),
-			Text = options.Description,
-			TextSize = 18,
-			Theme = {TextColor3 = "WeakText"},
-			TextXAlignment = Enum.TextXAlignment.Left
-		})
-	end
-
-
-	local jumppower = jumppowerContainer:object("jumppower", {
-		AnchorPoint = Vector2.new(1, 0),
-		Theme = {
-			BackgroundColor3 = {"Secondary", -20},
-			TextColor3 = "WeakText"
-		},
-		Position = UDim2.new(1, -50,0, 16),
-		Size = UDim2.new(0, 50,0, 20),
-		TextSize = 12,
-		PlaceholderText = options.Placeholder,
-		ClipsDescendants = true
-	}):round(5):stroke("Tertiary")
-
-	local writeIcon = jumppowerContainer:object("ImageLabel", {
-		Image = "http://www.roblox.com/asset/?id=8569329416",
-		AnchorPoint = Vector2.new(1, 0.5),
-		BackgroundTransparency = 1,
-		Position = UDim2.new(1, -13, 0.5, 0),
-		Size = UDim2.new(0, 16, 0, 16),
-		Theme = {ImageColor3 = "StrongText"}
-	})
-
-
-
-	jumppower.Size = UDim2.fromOffset(jumppower.TextBounds.X + 20, 20)
-
-	do
-		local hovered = false
-		local down = false
-		local focused = false
-
-		jumppowerContainer.MouseEnter:connect(function()
-			jumppowerContainer:tween{BackgroundColor3 = self:lighten(Library.CurrentTheme.Secondary, 10)}
-		end)
-
-		jumppowerContainer.MouseLeave:connect(function()
-			hovered = false
-			if not down then
-				jumppowerContainer:tween{BackgroundColor3 = Library.CurrentTheme.Secondary}
-			end
-		end)
-
-		jumppower.Focused:connect(function()
-			focused = true
-			while focused and RunService.RenderStepped:wait() do
-				jumppower.AbsoluteObject:TweenSize(
-					UDim2.fromOffset(math.clamp(jumppower.TextBounds.X + 20, 0, 0.5 * jumppowerContainer.AbsoluteSize.X), 20),
-					Enum.EasingDirection.InOut,
-					Enum.EasingStyle.Linear,
-					0.1,
-					true
-				)
-			end
-		end)
-
-		jumppower.FocusLost:connect(function()
-			focused = false
-			jumppower.AbsoluteObject:TweenSize(
-				UDim2.fromOffset(math.clamp(jumppower.TextBounds.X + 20, 0, 0.5 * jumppowerContainer.AbsoluteSize.X), 20),
-				Enum.EasingDirection.InOut,
-				Enum.EasingStyle.Linear,
-				0.1,
-				true
-			)
-			options.Callback(jumppower.Text)
-		end)
-	end
-	self:_resize_tab()
-
-	local methods = {}
-
-	function methods:Set(text)
-		jumppower.Text = text
+		textBox.Text = text
 	end
 
 	return methods
