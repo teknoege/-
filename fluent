@@ -1,0 +1,112 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Teknoege Hub " .. Fluent.Version,
+    SubTitle = "by teknoege",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.End -- Used when theres no MinimizeKeybind
+})
+
+--https://lucide.dev/icons/
+local Tabs = {
+    Main = Window:AddTab({ Title = "Universal", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Ayarlar", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+    Tabs.Main:AddButton({
+        Title = "İnfinite Yield",
+        Description = "Admin Script",
+        Callback = function()
+            Window:Dialog({
+                Title = "Bildirim",
+                Content = "Script Çalıştırılsın Mı?",
+                Buttons = {
+                    {
+                        Title = "Evet",
+                        Callback = function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+                        end
+                    },
+                    {
+                        Title = "Hayır",
+                        Callback = function()
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+
+-- Yürüme Hızı
+    local Input = Tabs.Main:AddInput("Input", {
+        Title = "Yürüme Hızı",
+        Default = "",
+        Placeholder = "16",
+        Numeric = true, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function()
+        end
+    })
+
+    Input:OnChanged(function(t)
+game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = t
+    end)
+end
+
+-- Zıplama Gücü
+    local Input = Tabs.Main:AddInput("Input", {
+        Title = "Zıplama Gücü",
+        Default = "",
+        Placeholder = "50",
+        Numeric = true, -- Only allows numbers
+        Finished = true, -- Only calls callback when you press enter
+        Callback = function(t)
+game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = t
+        end
+    })
+
+
+
+
+------------------------------------------------------------------------
+
+-- dosyalar
+Window:SelectTab(1)
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("Teknoege Hub")
+SaveManager:SetFolder("Teknoege Hub/Oyun-Ayarlari")
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+SaveManager:LoadAutoloadConfig()
+
+-- Yükleme Mesajı
+Fluent:Notify({
+    Title = "Teknoege Hub",
+    Content = "Hub Yüklendi.",
+    Duration = 5
+})
+
+-- esp
+local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Esp", Default = false })
+Toggle:OnChanged(function(state)
+getgenv().enabled = state --Toggle on/off
+getgenv().filluseteamcolor = true --Toggle fill color using player team color on/off
+getgenv().outlineuseteamcolor = true --Toggle outline color using player team color on/off
+getgenv().fillcolor = Color3.new(0, 0, 0) --Change fill color, no need to edit if using team color
+getgenv().outlinecolor = Color3.new(1, 1, 1) --Change outline color, no need to edit if using team color
+getgenv().filltrans = 0.5 --Change fill transparency
+getgenv().outlinetrans = 0.5 --Change outline transparency
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/Highlight-ESP.lua"))()
+end)
